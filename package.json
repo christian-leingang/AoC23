@@ -1,0 +1,14 @@
+{
+  "name": "aoc23",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node utils/run.js",
+    "setup": "node utils/setup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
