@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node utils/run.js",
-    "start:debug": "node --inspect utils/run.js",
-    "start:test": "node utils/run.js test",
+    "test": "npm start -- test",
+    "debug": "node --inspect utils/run.js",
+    "test:debug": "npm run debug -- test",
     "setup": "node utils/setup.js"
   },
   "keywords": [],
