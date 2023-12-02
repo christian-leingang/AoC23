@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node utils/run.js",
-    "start:debug": "node --inspect-brk utils/run.js",
+    "start:debug": "node --inspect utils/run.js",
     "start:test": "node utils/run.js test",
     "setup": "node utils/setup.js"
   },
