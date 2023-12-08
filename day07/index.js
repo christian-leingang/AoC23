@@ -1,4 +1,4 @@
-const cards = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
+const cards = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
 
 const determineTieBreaker = (handA, handB) => {
   for (let i = 0; i < handA.cards.length; i++) {
@@ -10,19 +10,32 @@ const determineTieBreaker = (handA, handB) => {
 };
 
 function getHandValue(line) {
-  const outA = line.cards.reduce((acc, cur) => {
+  const out = line.cards.reduce((acc, cur) => {
     acc[cur] = (acc[cur] || 0) + 1;
     return acc;
   }, {});
 
-  const countsA = Object.values(outA).sort((a, b) => b - a);
+  let counts = Object.entries(out).sort((a, b) => b[1] - a[1]);
+  if (line.cards.every((card) => card === 'J')) return 6;
 
-  if (countsA[0] === 5) return 6;
-  if (countsA[0] === 4) return 5;
-  if (countsA[0] === 3 && countsA[1] === 2) return 4;
-  if (countsA[0] === 3) return 3;
-  if (countsA[0] === 2 && countsA[1] === 2) return 2;
-  if (countsA[0] === 2) return 1;
+  if (counts[0][0] === 'J' && counts.length > 1) {
+    counts[1][1] += counts[0][1];
+    counts = counts.slice(1).sort((a, b) => b[1] - a[1]);
+  } else {
+    // Find 'J' and add its count to the card with the most occurrences
+    const jIndex = counts.findIndex(([card]) => card === 'J');
+    if (jIndex !== -1) {
+      counts[0][1] += counts[jIndex][1];
+      counts = counts.filter((_, index) => index !== jIndex);
+    }
+  }
+
+  if (counts[0][1] === 5) return 6;
+  if (counts[0][1] === 4) return 5;
+  if (counts[0][1] === 3 && counts[1][1] === 2) return 4;
+  if (counts[0][1] === 3) return 3;
+  if (counts[0][1] === 2 && counts[1][1] === 2) return 2;
+  if (counts[0][1] === 2) return 1;
   return 0;
 }
 
